@@ -1,0 +1,1 @@
+# StrategiAlgoritma_TugasKecil1

@@ -1,0 +1,16 @@
+8
+6 5
+6t 45 t7 t7 2f 45 
+45 6t 2f 6t t7 45 
+45 2f 2f 45 t7 as 
+as 2f 6t 2f 45 as
+as 45 as 6t 2f 2f 
+4
+as t7 2f 
+15
+as 6t as 
+20
+as 2f as 45
+30
+45 t7 as
+25

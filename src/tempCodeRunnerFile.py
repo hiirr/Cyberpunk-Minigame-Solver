@@ -1,0 +1,1 @@
+bufferSize, matrix, sequences, rewards = read_txt()

@@ -1,16 +1,33 @@
 8
-6 5
-6t 45 t7 t7 2f 45 
-45 6t 2f 6t t7 45 
-45 2f 2f 45 t7 as 
-as 2f 6t 2f 45 as
-as 45 as 6t 2f 2f 
-4
-as t7 2f 
-15
-as 6t as 
-20
-as 2f as 45
-30
-45 t7 as
-25
+8 8
+BD E9 BD 7A 1C 55 E9 BD
+1C E9 7A 7A 55 7A 7A E9
+E9 E9 1C E9 55 7A 55 1C
+E9 BD 55 E9 BD 55 BD 55
+BD E9 1C 1C 1C E9 1C E9
+BD 1C 55 55 BD 55 55 BD
+E9 1C BD 1C 1C E9 7A 1C
+1C BD 7A BD 1C BD E9 BD
+10
+BD 1C 
+-84
+55 BD 
+77
+E9 55 
+-37
+7A 1C 
+-72
+55 7A 
+59
+BD 7A 
+52
+BD 55 
+6
+E9 E9 
+96
+7A 1C 7A 
+-50
+55 55 
+-88
+
+

@@ -1,131 +1,74 @@
-# StrategiAlgoritma_TugasKecil1
-<!-- ![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png) -->
+# Cyperbunk 2077 Breach Protocol Minigame Solver
 
-# Global Conquest: Battle for Supremacy
-> Tugas Besar IF2121 Logika Komputasional
 
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
+> Tugas Kecil 1 IF2211 Strategi Algoritma
 
-## Installing 
+Tugas kecil ini dibuat dengan menggunakan strategi algoritma brute force yang terinspirasi untuk menyelesaikan sebuah permainan kecil pada permainan Cyberpunk 2077 Breach Protocol
 
-Program ini menggunakan bahasa prolog
-```shell
-packagemanager install awesome-project
-awesome-project start
-awesome-project "Do something!"  # prints "Nah."
-```
 
-Here you should say what actually happens when you execute the code above.
-
-### Initial Configuration
-
-Some projects require initial configuration (e.g. access tokens or keys, `npm i`).
-This is the section where you would document those requirements.
-
-## Developing
-
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
+## Instalasi
+Instalasi program dilakukan dengan melakukan clone repository ini dengan mengetik pada terminal
 
 ```shell
-git clone https://github.com/GAIB21/tugas-besar-if2121-logika-komputasional-2023-ngko-sek.git
+git clone https://github.com/hiirr/Cyberpunk-Minigame-Solver.git
 ```
 
-Setelah melakukan clone, 
+ketergantungan: python 3.x
 
-### Building
+## Kompilasi
 
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here:
+Apabila repository sudah di-clone, kompilasi program dengan mengetik
 
 ```shell
-./configure
-make
-make install
+python main.py
 ```
+catatan: program dapat digunakan pada windows dan linux
 
-Here again you should state what actually happens when the code above gets
-executed.
+## Penggunaan
 
-### Deploying / Publishing
+1. **Pilih di antara dua pilihan metode pada program ini,**
+- Metode 1: File TXT
+  Berikan masukan melalui file `.txt`.
+- Metode 2:** CLI: Masukkan langsung dari baris perintah.
 
-In case there's some step you have to take that publishes this project to a
-server, this is the right time to state it.
+2. **Ikuti petunjuk untuk memasukkan data berdasarkan metode yang dipilih.**
 
+3. **Program akan mencari solusi dan menampilkannya di CLI.**
+4. **Secara opsional, Anda dapat memilih untuk menyimpan solusi ke file TXT.**
+
+#### Format File txt
 ```shell
-packagemanager deploy awesome-project -s server.com -u username -p password
+Ukuran buffer
+Ukuran matriks (kolom baris)
+Matriks
+Jumlah sekuens
+sekuens ke-1
+bobot untuk sekuens ke-1
+sekuens ke-2
+bobot untuk sekuens ke-2
+...
+sekuens ke-n
+bobot untuk sekuens ke-n
 ```
-
-And again you'd need to tell what the previous code actually does.
-
-## Features
-
-What's all the bells and whistles this project can perform?
-* What's the main functionality
-* You can also do another thing
-* If you get really randy, you can even do this
-
-## Configuration
-
-Here you should write what are all of the configurations a user can enter when
-using the project.
-
-#### Argument 1
-Type: `String`  
-Default: `'default value'`
-
-State what an argument does and how you can use it. If needed, you can provide
-an example below.
-
-Example:
-```bash
-awesome-project "Some other value"  # Prints "You're nailing this readme!"
+contoh,
+```shell
+7
+6 6
+7A 55 E9 E9 1C 55
+55 7A 1C 7A E9 55
+55 1C 1C 55 E9 BD
+BD 1C 7A 1C 55 BD
+BD 55 BD 7A 1C 1C
+1C 55 55 7A 55 7A
+3
+BD E9 1C
+15
+BD 7A BD
+20
+BD 1C BD 55
+30
 ```
+### Kontributor
 
-#### Argument 2
-Type: `Number|Boolean`  
-Default: 100
-
-Copy-paste as many of these as you need.
-
-## Contributing
-
-When you publish something open source, one of the greatest motivations is that
-anyone can just jump in and start contributing to your project.
-
-These paragraphs are meant to welcome those kind souls to feel that they are
-needed. You should state something like:
-
-"If you'd like to contribute, please fork the repository and use a feature
-branch. Pull requests are warmly welcome."
-
-If there's anything else the developer needs to know (e.g. the code style
-guide), you should link it here. If there's a lot of things to take into
-consideration, it is common to separate this section to its own file called
-`CONTRIBUTING.md` (or similar). If so, you should say that it exists here.
-
-## Links
-
-Even though this information can be found inside the project on machine-readable
-format like in a .json file, it's good to include a summary of most useful
-links to humans using your project. You can include links like:
-
-- Project homepage: https://your.github.com/awesome-project/
-- Repository: https://github.com/your/awesome-project/
-- Issue tracker: https://github.com/your/awesome-project/issues
-  - In case of sensitive bugs like security vulnerabilities, please contact
-    my@email.com directly instead of using issue tracker. We value your effort
-    to improve the security and privacy of this project!
-- Related projects:
-  - Your other project: https://github.com/your/other-project/
-  - Someone else's project: https://github.com/someones/awesome-project/
-
-
-## Licensing
-
-One really important part: Give your project a proper license. Here you should
-state what the license is and how to find the text version of the license.
-Something like:
-
-"The code in this project is licensed under MIT license."
+Zahira Dina Amalia,
+NIM 13522085

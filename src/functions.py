@@ -40,7 +40,7 @@ def print_data(buffer_size, matrix, sequences, rewards):
     return
 
 def output_cli(reward, tokens, steps, time):
-    if reward == 0:
+    if reward <= 0:
         print("Tidak ada solusi yang memenuhi.")
     else:
         print(reward)
@@ -56,12 +56,15 @@ def output_txt(reward, tokens, steps, time, name):
     file = os.path.join(folder, name)
 
     with open(file, 'w') as file:
-        file.write(str(reward) + "\n")
-        sequence = " ".join(tokens)
-        file.write(sequence)
-        file.write("\n")
-        print_steps(steps, file=file)
-        file.write(f"\n{str(int(time*1000))} ms")
+        if reward > 0:
+            file.write(str(reward) + "\n")
+            sequence = " ".join(tokens)
+            file.write(sequence)
+            file.write("\n")
+            print_steps(steps, file=file)
+            file.write(f"\n{str(int(time*1000))} ms")
+        else:
+            file.write("Tidak ada solusi yang memenuhi")
 
     print(f"Solusi telah di simpan pada '{name}.txt'.")
     print("\n|----          SEE YOU SOON!!          ----|")
@@ -79,7 +82,7 @@ def read_txt():
     belum = True
 
     while belum:
-        file = input("\nMasukan nama file dengan format '.txt': ")
+        file = input("Masukan nama file dengan format '.txt': ")
         path = os.path.join("test", file)
         
         if os.path.exists(path):
@@ -87,20 +90,28 @@ def read_txt():
             try:
                 with open(path, 'r') as file:
                     lines = [line.strip() for line in file.readlines()]
-
+                    
                     buffer_size = int(lines[0])
                     matrix_size = lines[1]
                     matrix_cols = int(matrix_size.split()[0])
                     matrix_rows = int(matrix_size.split()[1])
+                    if matrix_cols > 8 and matrix_rows > 8:
+                        print("\nProgram akan berjalan sangat lama untuk untuk matriks lebih besar dari 8x8, coba masukan file lain!")
+                        bufferSize, matrix, sequences, rewards = read_txt()
+                        return buffer_size, matrix, sequences, rewards
                     for i in range(2, 2 + matrix_rows):
                         elements = lines[i].split()
                         matrix.append(elements)
                     number_seq = int(lines[2 + matrix_rows])
                     for i in range(3 + matrix_rows, len(lines), 2):
-                        sequence = lines[i].split()
-                        reward = int(lines[i + 1])
-                        sequences.append(sequence)
-                        rewards.append(reward)
+                        if lines[i] != "":
+                            sequence = lines[i].split()
+                            reward = int(lines[i + 1])
+                            sequences.append(sequence)
+                            rewards.append(reward)
+                        else:
+                            break
+                    
                     
                 jawaban = input("\nApakah ingin melihat data yang dimuat? (Y/N) ")
                 answer = jawaban.upper()
@@ -108,10 +119,10 @@ def read_txt():
                     print_data(buffer_size, matrix, sequences, rewards)
 
             except FileNotFoundError:
-                print(f"Error: File {path} tidak dapat dibaca, pastikan file dalam bentuk '.txt'!")
+                print(f"Error: File {path} tidak dapat dibaca, pastikan file ada dan dalam bentuk '.txt'!")
 
         else:
-            print(f"\nError: File dengan nama '{path}' tidak ditemukan!")
+            print(f"\nError: File dengan nama '{file}' tidak ditemukan!")
             jawaban = input("Apakah ingin mencoba lagi? (Y/N) ")
             answer = jawaban.upper()
             print("")
@@ -128,46 +139,88 @@ def random_sequences(tokens, maxSeq):
 
 def random_reward():
     num = random.randint(1, 100) 
-    if num % 5 != 0 :
-        return num + (5 - num % 5) 
-    else:
-        return num
+    return num
 
 def read_cli():
     # Token
-    number_token = int(input("Jumlah token unik yang diinginkan: "))
+    while True:
+        try:
+            number_token = int(input("Jumlah token unik yang diinginkan: "))
+            break
+        except ValueError:
+            print("Masukan harus berupa bilangan bulat. Silakan coba lagi.")
+
     list_token = []
     for i in range(number_token):
-        token_i = input(f"Token ke-{i+1}: ")
-        list_token.append(token_i)
-
+        token = False
+        while not token:
+            token_i = input(f"Token ke-{i+1}: ")
+            if len(token_i) == 2 and token_i.isalnum():
+                if token_i in list_token:
+                    print("\nToken sudah dimasukkan sebelumnya! Ulangi masukan!")
+                else:
+                    token = True
+                    list_token.append(token_i)
+                
+                
+            else:
+                print("\nMasukan token dengan panjang 2 dan berisi alfanumerik!")
+        
     # Buffer
-    buffer_size = int(input("Masukan ukuran buffer yang diinginkan: "))
+    while True:
+        try:
+            buffer_size = int(input("Masukan ukuran buffer yang diinginkan: "))
+            break
+        except ValueError:
+            print("Masukan harus berupa bilangan bulat. Silakan coba lagi.")
 
     # Matriks
-    matrix_size = input("Masukan ukuran matriks yang diinginkan (kolom baris): ")
-    matrix_col = int((matrix_size.split())[0])
-    print(matrix_col)
-    matrix_row = int((matrix_size.split())[1])
-    print(matrix_row)
-    matrix = [[random.choice(list_token) for _ in range(matrix_col)] for _ in range(matrix_row)]
+    aman = False
+    while not aman:
+        while True:
+            try:
+                matrix_size = input("Masukan ukuran matriks yang diinginkan (kolom baris): ")
+                matrix_col = int((matrix_size.split())[0])
+                matrix_row = int((matrix_size.split())[1])
+                break
+            except ValueError:
+                print("Masukan harus berupa bilangan bulat. Silakan coba lagi.")
+        if matrix_col*matrix_row <= 64:
+            matrix = [[random.choice(list_token) for _ in range(matrix_col)] for _ in range(matrix_row)]
+            aman = True
+        else:
+            print("\nProgram akan berjalan sangat lama untuk untuk matriks lebih besar dari 8x8 (yang hasil kali baris dan kolomnya 64), coba masukan ukuran lain!")
 
     # Sekuens
-    number_seq = int(input("Masukkan jumlah sekuens yang diinginkan: "))
-    maximal_size_seq = int(input("Masukkan ukuran maksimal sekuens yang diinginkan: "))
+    while True:
+        try:
+            number_seq = int(input("Masukan jumlah sekuens yang diinginkan: "))
+            break
+        except ValueError:
+            print("Masukan harus berupa bilangan bulat. Silakan coba lagi.")
+
+    while True:
+        try:
+            maximal_size_seq = int(input("Masukan ukuran maksimal sekuens yang diinginkan: "))
+            break
+        except ValueError:
+            print("Masukan harus berupa bilangan bulat. Silakan coba lagi.")
+
     sequences = []
     for j in range(number_seq):
-        sequence = random_sequences(list_token, maximal_size_seq)
-        sequences.append(sequence)
+        temp = random_sequences(list_token, maximal_size_seq)
+        sequences.append(tuple(temp))
+    sequenceset = set(sequences)
+    sequencelist = [list(sequence) for sequence in sequenceset]
 
     # Rewards
     rewards = []
-    for k in range(number_seq):
+    for k in range(len(sequencelist)):
         reward = random.randint(1, 50)
         rewards.append(reward)
-    print_data(buffer_size, matrix, sequences, rewards)
+    print_data(buffer_size, matrix, sequencelist, rewards)
 
-    return buffer_size, matrix, sequences, rewards
+    return buffer_size, matrix, sequencelist, rewards
 
 # Fungsi yang digunakan untuk proses
 def startMove0N(matrix, n):
@@ -201,7 +254,6 @@ def horizontal_move(arrayBefore, stepsBefore, matrix):
                 currentSteps.append(new_steps)
             else:
                 continue   
-
     return currentArray, currentSteps
 
 def vertical_move(arrayBefore, stepsBefore, matrix):
@@ -242,11 +294,19 @@ def process(bufferSize, matrix, sequences, rewards):
 
     for start in range(len(matrix[0])):
         arrayNow, stepsNow = startMove0N(matrix, start)
-        for i in range(1, bufferSize-1):
-            if i % 2 == 0:
-                arrayNow, stepsNow = vertical_move(arrayNow, stepsNow, matrix)
-            else:
-                arrayNow, stepsNow = horizontal_move(arrayNow, stepsNow, matrix)
+        if len(matrix)*len(matrix[0]) > bufferSize:
+            for i in range(1, bufferSize-1):
+                if i % 2 == 0:
+                    arrayNow, stepsNow = vertical_move(arrayNow, stepsNow, matrix)
+                else:
+                    arrayNow, stepsNow = horizontal_move(arrayNow, stepsNow, matrix)
+        else: 
+            for i in range(1, len(matrix)*len(matrix[0])-1):
+                if i % 2 == 0:
+                    arrayNow, stepsNow = vertical_move(arrayNow, stepsNow, matrix)
+                else:
+                    arrayNow, stepsNow = horizontal_move(arrayNow, stepsNow, matrix)
+
 
         for chance in range(len(arrayNow)):
             reward = 0

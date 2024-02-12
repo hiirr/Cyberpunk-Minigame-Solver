@@ -7,7 +7,6 @@ print("|----          SELAMAT DATANG          ----|")
 print("|----     DI CYPERBUNK 2077 BREACH     ----|")
 print("|----          PROTOCOL SOLVER         ----|")
 print("|------------------------------------------|\n")
-
 print("Silakan pilih metode masukan yang diinginkan \n")
 print("| 1 | Metode TXT: dengan memasukkan file '.txt'")
 print("| 2 | Metode CLI: dengan masukan dari command line")

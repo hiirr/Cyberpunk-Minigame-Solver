@@ -91,32 +91,55 @@ def read_txt():
                 with open(path, 'r') as file:
                     lines = [line.strip() for line in file.readlines()]
                     
+                    if len(lines) < 3:
+                        print("\nFile tidak sesuai format! Pastikan file sesuai format atau coba masukan file lain!")
+                        bufferSize, matrix, sequences, rewards = read_txt()
+                        return buffer_size, matrix, sequences, rewards
+        
                     buffer_size = int(lines[0])
                     matrix_size = lines[1]
-                    matrix_cols = int(matrix_size.split()[0])
-                    matrix_rows = int(matrix_size.split()[1])
+                    matrix_cols, matrix_rows = map(int, matrix_size.split())
+
                     if matrix_cols > 8 and matrix_rows > 8:
                         print("\nProgram akan berjalan sangat lama untuk untuk matriks lebih besar dari 8x8, coba masukan file lain!")
                         bufferSize, matrix, sequences, rewards = read_txt()
                         return buffer_size, matrix, sequences, rewards
+                    
                     for i in range(2, 2 + matrix_rows):
                         elements = lines[i].split()
+                        if len(elements) != matrix_cols:
+                            print("\nFile tidak sesuai format! Pastikan file sesuai format atau coba masukan file lain!")
+                            bufferSize, matrix, sequences, rewards = read_txt()
+                            return buffer_size, matrix, sequences, rewards
                         matrix.append(elements)
-                    number_seq = int(lines[2 + matrix_rows])
+
+                    if len(lines) < 3 + matrix_rows :
+                        print("\nFile tidak sesuai format! Pastikan file sesuai format atau coba masukan file lain!")
+                        bufferSize, matrix, sequences, rewards = read_txt()
+                        return buffer_size, matrix, sequences, rewards
+
+                    number_seq = int(lines[2 + matrix_rows])    
+                    
+                    if len(lines) < 4 + matrix_rows + number_seq * 2:
+                        print("\nFile tidak sesuai format! Pastikan file sesuai format atau coba masukan file lain!")
+                        bufferSize, matrix, sequences, rewards = read_txt()
+                        return buffer_size, matrix, sequences, rewards
+                    
                     for i in range(3 + matrix_rows, len(lines), 2):
                         if lines[i] != "":
                             sequence = lines[i].split()
                             reward = int(lines[i + 1])
-                            sequences.append(sequence)
+                            sequences.append(tuple(sequence))
                             rewards.append(reward)
-                        else:
-                            break
+                        
+                    sequenceset = set(sequences)
+                    sequencelist = [list(sequence) for sequence in sequenceset]
                     
                     
                 jawaban = input("\nApakah ingin melihat data yang dimuat? (Y/N) ")
                 answer = jawaban.upper()
                 if answer == 'Y':
-                    print_data(buffer_size, matrix, sequences, rewards)
+                    print_data(buffer_size, matrix, sequencelist, rewards)
 
             except FileNotFoundError:
                 print(f"Error: File {path} tidak dapat dibaca, pastikan file ada dan dalam bentuk '.txt'!")
@@ -131,7 +154,7 @@ def read_txt():
                 print("\n|----          SEE YOU SOON!!          ----|")
                 return None, None, None, None
         
-    return buffer_size, matrix, sequences, rewards
+    return buffer_size, matrix, sequencelist, rewards
 
 def random_sequences(tokens, maxSeq):
     length = random.randint(2, maxSeq)
